@@ -1,0 +1,210 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Untitled drawing (4).png" type="Texture" id=1]
+[ext_resource path="res://playa.gd" type="Script" id=2]
+[ext_resource path="res://jag2.png" type="Texture" id=3]
+[ext_resource path="res://hitter.tscn" type="PackedScene" id=4]
+[ext_resource path="res://game.gd" type="Script" id=5]
+[ext_resource path="res://Swamp_Tree.png" type="Texture" id=7]
+[ext_resource path="res://Big_Cloud.png" type="Texture" id=8]
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0.010929, 1 )
+colors = PoolColorArray( 0.227451, 0.52549, 0.521569, 1, 0.119751, 0.28125, 0.26833, 1 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+width = 100
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 9406.89, 1664.65 )
+
+[sub_resource type="PhysicsMaterial" id=4]
+bounce = 0.5
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 30, 47 )
+
+[sub_resource type="RectangleShape2D" id=9]
+extents = Vector2( 7.5, 30 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.200806, 1, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 0.266667 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 1, 0.913725, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0, 0, 0, 0.266667 )
+
+[node name="GAME" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="mmmm" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 5599.0
+margin_top = 261.0
+margin_right = 5699.0
+margin_bottom = 5256.0
+rect_rotation = 90.0
+rect_scale = Vector2( 16.0211, 1.97699 )
+texture = SubResource( 8 )
+stretch_mode = 1
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_left = -4371.0
+margin_top = -11.0
+margin_right = 15225.0
+margin_bottom = 527.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 7 )
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+margin_left = -4615.0
+margin_top = -2020.0
+margin_right = 5222.0
+margin_bottom = -339.0
+texture = ExtResource( 8 )
+stretch_mode = 2
+
+[node name="bg" type="Sprite" parent="."]
+visible = false
+position = Vector2( 522.5, 256 )
+scale = Vector2( 0.523233, 0.598322 )
+texture = ExtResource( 1 )
+
+[node name="gravity" type="Area2D" parent="."]
+position = Vector2( 522.5, 256 )
+scale = Vector2( 0.523233, 0.598322 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="gravity"]
+modulate = Color( 0.411765, 0.819608, 0.203922, 0.733333 )
+position = Vector2( -377.461, -1716.47 )
+shape = SubResource( 2 )
+
+[node name="tlc" type="Sprite" parent="."]
+position = Vector2( 497.3, 362 )
+rotation = 1.5708
+scale = Vector2( 0.11, 0.11 )
+texture = ExtResource( 3 )
+
+[node name="Player" type="RigidBody2D" parent="."]
+position = Vector2( 506, 362 )
+mass = 2.0
+physics_material_override = SubResource( 4 )
+gravity_scale = 0.0
+contacts_reported = 1
+contact_monitor = true
+script = ExtResource( 2 )
+
+[node name="Timer" type="Timer" parent="Player"]
+wait_time = 0.27
+one_shot = true
+
+[node name="Timer2" type="Timer" parent="Player/Timer"]
+wait_time = 0.2
+one_shot = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+current = true
+smoothing_enabled = true
+smoothing_speed = 20.0
+
+[node name="damagebox" type="Area2D" parent="Player"]
+position = Vector2( 41, 0 )
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/damagebox"]
+modulate = Color( 1, 0, 0, 1 )
+shape = SubResource( 9 )
+
+[node name="RemoteTransform2D" type="RemoteTransform2D" parent="Player"]
+position = Vector2( -8.7, 0 )
+rotation = 1.5708
+scale = Vector2( 0.11, 0.11 )
+remote_path = NodePath("../../tlc")
+update_position = false
+
+[node name="eel" parent="." instance=ExtResource( 4 )]
+position = Vector2( 687, 387 )
+
+[node name="body" parent="eel" index="0"]
+rotation = 0.911281
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="one" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_left = 7.0
+margin_top = 357.0
+margin_right = 25.0
+margin_bottom = 419.0
+color = Color( 1, 0.913725, 0, 1 )
+
+[node name="two" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_left = 7.0
+margin_top = 284.0
+margin_right = 25.0
+margin_bottom = 346.0
+color = Color( 1, 0.913725, 0, 1 )
+
+[node name="three" type="ColorRect" parent="CanvasLayer"]
+visible = false
+margin_left = 7.0
+margin_top = 212.0
+margin_right = 25.0
+margin_bottom = 274.0
+color = Color( 1, 0.913725, 0, 1 )
+
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 7.0
+margin_top = -6.0
+margin_right = 112.0
+margin_bottom = 12.0
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 5 )
+custom_styles/bg = SubResource( 6 )
+value = 50.0
+percent_visible = false
+
+[node name="boostcharge" type="ProgressBar" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 77.0
+margin_top = 21.0
+margin_right = 132.0
+margin_bottom = 30.0
+rect_rotation = -90.0
+custom_styles/fg = SubResource( 10 )
+custom_styles/bg = SubResource( 11 )
+min_value = -10.0
+max_value = 30.0
+value = -10.0
+percent_visible = false
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="timeout" from="Player/Timer" to="Player" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Player/Timer/Timer2" to="Player" method="_on_Timer2_timeout"]
+[connection signal="area_entered" from="Player/damagebox" to="Player" method="_on_damagebox_area_entered"]
+
+[editable path="eel"]
